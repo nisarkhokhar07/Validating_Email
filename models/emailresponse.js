@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
-const { sq } = require("../config/db");
+const sq = require("../config/dbconfig");
 
-const emailresponse = sq.define("emailresponse", {
+const emailresponses = sq.define("emailresponses", {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -41,8 +41,4 @@ const emailresponse = sq.define("emailresponse", {
   },
 });
 
-emailresponse.sync({ force: true }).then(() => {
-  console.log("emailresponse table created");
-});
-
-module.exports = { emailresponse };
+module.exports = { emailresponses };

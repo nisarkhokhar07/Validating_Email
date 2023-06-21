@@ -2,25 +2,93 @@ const fs = require("fs");
 const csvParser = require("csv-parser");
 const validator = require("deep-email-validator");
 const { Parser } = require("json2csv");
-let { emailresponse } = require("../models/emailresponse");
+const { emailresponses } = require("../models/emailresponse");
 const path = require("path");
+const writetofile = require("../services/writefile");
 let CsvData;
+
+const deletedownloadfile = () => {
+  const file = path.join(__dirname, "../public/uploads/downloadedfile.csv");
+  // console.log(file);
+  try {
+    fs.unlink(file, (err) => {
+      if (err) {
+        console.log(err.message);
+      } else {
+        console.log("file deleted");
+      }
+    });
+  } catch (err) {
+    res.send(err.message);
+  }
+};
+
+const deleteupdatefile = () => {
+  const updatedfile = path.join(__dirname, "../public/uploads/updatedfile.csv");
+  try {
+    fs.unlink(updatedfile, (err) => {
+      if (err) {
+        console.log(err.message);
+      } else {
+        console.log("updated file deleted");
+      }
+    });
+  } catch (err) {
+    res.send(err.message);
+  }
+};
 
 const importUser = async (req, res) => {
   const filepath = req.file.path;
   console.log(filepath);
-  const dest = req.file.destination;
+  /*const dest = req.file.destination;
   console.log(dest);
   const pathdest = path.join(dest + "/updatedfile.csv");
-  console.log(pathdest);
+  console.log(pathdest);*/
 
   const filestream = fs.createReadStream(filepath);
 
-  const writeablestream = fs.createWriteStream(pathdest);
   const processedData = [];
   const processedDataforDb = [];
 
-  const deletedownloadfile = () => {
+  /*const writetofile = (data) => {
+    const writeablestream = fs.createWriteStream(pathdest);
+
+    writeablestream.write(data);
+    writeablestream.end();
+
+    writeablestream.on("finish", () => {
+      console.log("Done writing file");
+    });
+    writeablestream.on("error", () => {
+      console.log("error writing file");
+    });
+  };*/
+
+  /*const pushdatatoDatabase = async (data) => {
+    console.log("Entered Database Function");
+    try {
+      await emailresponses
+        .bulkCreate(
+          data.map((value) => ({
+            Email: value.Email,
+            Valid: value.Valid,
+            Reason: value.R,
+            Typo: value.T,
+            Smtp: value.S,
+            Regex: value.RE,
+            Disposible: value.D,
+            Mx: value.M,
+          }))
+        )
+        .then(() => console.log("created Database"));
+      console.log("Column data inserted into the database successfully");
+    } catch (error) {
+      console.error(error.message);
+    }
+  };*/
+
+  /*const deletedownloadfile = () => {
     const file = path.join(__dirname, "../public/uploads/downloadedfile.csv");
     // console.log(file);
     if (file) {
@@ -50,17 +118,18 @@ const importUser = async (req, res) => {
     } else {
       console.log("updated file does not exists");
     }
-  };
+  };*/
 
   filestream
     .pipe(csvParser())
     .on("headers", (headers) => {
       const emailcolumnexists = headers.includes("Email" || "email");
       if (!emailcolumnexists) {
-        res.send("Column does not exists");
+        res.status(400).send("Email Column does not exists");
         deletedownloadfile();
-        deleteupdatefile();
+        // deleteupdatefile();
         filestream.destroy();
+        return;
       }
     })
     .on("data", async (row) => {
@@ -99,7 +168,9 @@ const importUser = async (req, res) => {
       }
       CsvData = CsvParse.parse(validatedData);
 
-      writeablestream.write(CsvData);
+      writetofile(CsvData, filepath);
+
+      /*writeablestream.write(CsvData);
       writeablestream.end();
 
       writeablestream.on("finish", () => {
@@ -107,7 +178,7 @@ const importUser = async (req, res) => {
       });
       writeablestream.on("error", () => {
         console.log("error writing file");
-      });
+      });*/
 
       // console.log(processedDataforDb.length);
 
@@ -147,8 +218,9 @@ const importUser = async (req, res) => {
 
       const pushdatatoDatabase = async (data) => {
         console.log("Entered Database Function");
+
         try {
-          await emailresponse
+          await emailresponses
             .bulkCreate(
               data.map((value) => ({
                 Email: value.Email,
@@ -179,6 +251,23 @@ const importUser = async (req, res) => {
 
 const exportUser = async (req, res) => {
   try {
+    // const filepath = path.join(
+    //   __dirname,
+    //   "../public/uploads/downloadedfile.csv"
+    // );
+
+    // if (!fs.existsSync(filepath)) {
+    //   // deletedownloadfile();
+
+    //   const pathdest = path.join(
+    //     __dirname,
+    //     "../public/uploads/updatedfile.csv"
+    //   );
+    //   if (!fs.existsSync(pathdest)) {
+    //     // deleteupdatefile();
+    //     res.status(400).send("File Does not exist");
+    //   }
+    // } else {
     res.setHeader("Content-Type", "text/csv");
     res.setHeader(
       "Content-Disposition",
@@ -187,7 +276,15 @@ const exportUser = async (req, res) => {
 
     deletedownloadfile();
     deleteupdatefile();
-    res.status(200).end(CsvData);
+    // const pathdest = path.join(__dirname, "../public/uploads/updatedfile.csv");
+    // if (fs.existsSync(pathdest)) {
+    //   deleteupdatefile();
+    // } else {
+    //   res.send("File Doesnot exist");
+    // }
+    // res.status(200).send("Done Downloading File");
+    res.end(CsvData);
+    // }
   } catch (error) {
     res.send({ status: 400, success: false, msg: error.message });
   }

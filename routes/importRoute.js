@@ -3,30 +3,23 @@ const multer = require("multer");
 const path = require("path");
 const importController = require("../controllers/importController");
 
-const app = express();
+const router = express.Router();
 
-app.use(express.json());
-// app.use(
-//   express.urlencoded({
-//     extended: true,
-//   })
-// );
-
-app.use(express.static(path.resolve("./public")));
+router.use(express.static(path.resolve("./public")));
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "./public/uploads");
   },
   filename: (req, file, cb) => {
-    cb(null, "downloadedfile.csv");
+    cb(null, file.originalname);
   },
 });
 
 const upload = multer({ storage: storage });
 
-app.post("/importfile", upload.single("file"), importController.importUser);
+router.post("/importfile", upload.single("file"), importController.importUser);
 
-app.get("/exportfile", importController.exportUser);
+router.get("/exportfile", importController.exportUser);
 
-module.exports = app;
+module.exports = router;
