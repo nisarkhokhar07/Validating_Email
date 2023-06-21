@@ -2,6 +2,7 @@ const { emailresponses } = require("../models/emailresponse");
 
 const pushdatatoDatabase = async (data) => {
   console.log("Entered Database Function");
+  console.log(data);
 
   try {
     await emailresponses
