@@ -17,17 +17,12 @@ const importUser = async (req, res) => {
   const validatedData = await validatedata(JsonData);
 
   //sending data to database
-  // const JsonDataforDb = XLSX.utils.sheet_to_json(worksheet);
-  // const validatedDataforDb = await validatefordb(JsonDataforDb);
-  // pushdatatoDatabase(validatedDataforDb);
+  const JsonDataforDb = XLSX.utils.sheet_to_json(worksheet);
+  const validatedDataforDb = await validatefordb(JsonDataforDb);
+  pushdatatoDatabase(validatedDataforDb);
 
   //updating file with new valid column
   appendcolumn(validatedData);
-
-  /*const newworkbook = XLSX.utils.book_new();
-  const newworksheet = XLSX.utils.json_to_sheet(validatedData);
-  XLSX.utils.book_append_sheet(newworkbook, newworksheet, "updatedSheet");
-  XLSX.writeFile(newworkbook, filePath);*/
 
   res.status(200).send("Done with file update and pushing data to database");
 };
