@@ -12,7 +12,7 @@ const storage = multer.diskStorage({
     cb(null, "./public/uploads");
   },
   filename: (req, file, cb) => {
-    cb(null, "filetoprocess.csv");
+    cb(null, "fileprocessed.xlsx");
   },
 });
 

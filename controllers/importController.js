@@ -1,107 +1,58 @@
 const fs = require("fs");
-const csvParser = require("csv-parser");
 const validator = require("deep-email-validator");
-const { Parser } = require("json2csv");
 const path = require("path");
+const XLSX = require("xlsx");
 
 const writetofile = require("../services/writefile");
 const pushdatatoDatabase = require("../services/pushdatatodb");
 
-let CsvData;
-let validatedDataforDb = [];
-
 const importUser = async (req, res) => {
-  const filepath = req.file.path;
-  console.log(filepath);
+  const filePath = req.file.path;
 
-  const filestream = fs.createReadStream(filepath);
+  const workbook = XLSX.readFile(filePath);
 
-  const processedData = [];
-  const processedDataforDb = [];
+  const sheetNames = workbook.SheetNames;
 
-  filestream
-    .pipe(csvParser())
-    .on("headers", (headers) => {
-      const emailcolumnexists = headers.includes("Email" || "email");
-      if (!emailcolumnexists) {
-        res.status(400).send("Email Column does not exists");
-        deletedownloadfile();
-        filestream.destroy();
-        return;
-      }
-    })
-    .on("data", async (row) => {
-      processedData.push(row);
-      processedDataforDb.push({ Email: row.Email || row.email });
-    })
-    .on("end", async () => {
-      const CsvParse = new Parser();
-      let validatedData = [];
+  const firstSheetName = sheetNames[0];
+  const worksheet = workbook.Sheets[firstSheetName];
 
-      while (processedData.length) {
-        const data = processedData.splice(
-          0,
-          processedData.length > 50000 ? 50000 : processedData.length
-        );
-        const temp = await Promise.all(
-          data.map(async (obj) => {
-            const { valid, reason, validators } = await validator.validate(
-              obj.Email || obj.email
-            );
+  const JsonData = XLSX.utils.sheet_to_json(worksheet);
 
-            if (valid) {
-              obj.Valid = 1;
-            } else {
-              obj.Valid = 0;
-            }
+  console.log(typeof JsonData);
 
-            return obj;
-          })
-        );
-        validatedData = [...validatedData, ...temp];
-      }
-      CsvData = CsvParse.parse(validatedData);
+  console.log(JsonData.length);
+  let validatedData = [];
 
-      writetofile(CsvData, filepath);
+  while (JsonData.length) {
+    const data = JsonData.splice(
+      0,
+      JsonData.length > 50000 ? 50000 : JsonData.length
+    );
+    console.log(data.length);
+    const temp = await Promise.all(
+      data.map(async (obj) => {
+        const { valid } = await validator.validate(obj.Email);
 
-      while (processedDataforDb.length) {
-        const data = processedDataforDb.splice(
-          0,
-          processedDataforDb.length > 50000 ? 50000 : processedDataforDb.length
-        );
-        const temp = await Promise.all(
-          data.map(async (item) => {
-            const { valid, reason, validators } = await validator.validate(
-              item.Email
-            );
-            item.Valid = valid;
-            if (reason) {
-              if (item.Email) {
-                item.R = reason;
-              } else {
-                item.R = "No Email";
-              }
-            } else {
-              item.R = "Valid Email";
-            }
-            item.T = validators.typo.valid;
-            item.S = validators.smtp.valid;
-            item.M = validators.mx.valid;
-            item.D = validators.disposable.valid;
-            item.RE = validators.regex.valid;
-            return item;
-          })
-        );
-        validatedDataforDb = [...validatedDataforDb, ...temp];
-      }
+        if (valid) {
+          obj.Valid = 1;
+        } else {
+          obj.Valid = 0;
+        }
 
-      pushdatatoDatabase(validatedDataforDb);
+        return obj;
+      })
+    );
+    validatedData = [...validatedData, ...temp];
+  }
 
-      res.send({ status: 200, success: true, msg: "done" });
-    })
-    .on("error", (error) => {
-      res.status(500).send("Error occured while processing the csv file");
-    });
+  const newworkbook = XLSX.utils.book_new();
+  const newworksheet = XLSX.utils.json_to_sheet(validatedData);
+
+  XLSX.utils.book_append_sheet(newworkbook, newworksheet, "updatedSheet");
+
+  XLSX.writeFile(newworkbook, filePath);
+
+  res.status(200).send("Updated file");
 };
 
 const exportUser = async (req, res) => {

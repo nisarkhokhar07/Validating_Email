@@ -15,7 +15,6 @@ const sequelize = new Sequelize(
     dialect: config.dialect,
   }
 );
-// app.use(express.json());
 
 // Test database connection
 sequelize
