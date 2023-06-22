@@ -2,13 +2,20 @@ const validator = require("deep-email-validator");
 
 const validatefordb = async (processedDataforDb) => {
   try {
+    //made an array where our updated data will be stored
+    //which will have objects in which we add more key value pairs
+
     let validatedDataforDb = [];
 
     while (processedDataforDb.length) {
+      //if data would be of huge size
+      //wihout reading it in chunks heap memory will get get and code will throw an error
       const data = processedDataforDb.splice(
         0,
         processedDataforDb.length > 50000 ? 50000 : processedDataforDb.length
       );
+      //we add promise.all so that once all the promises would be resolved the code will proceed
+      //as we have to use this data later on to push it to db
       const temp = await Promise.all(
         data.map(async (item) => {
           const { valid, reason, validators } = await validator.validate(
@@ -36,7 +43,7 @@ const validatefordb = async (processedDataforDb) => {
     }
     return validatedDataforDb;
   } catch (error) {
-    console.log("Error while validating data for db.");
+    console.log("Error while validating data for db --> " + error.message);
   }
 };
 
