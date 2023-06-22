@@ -15,8 +15,7 @@ module.exports = {
         unique: true,
       },
       Valid: {
-        type: Sequelize.BOOLEAN,
-        defaultValue: false,
+        type: Sequelize.STRING,
       },
 
       Reason: {

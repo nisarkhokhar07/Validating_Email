@@ -12,8 +12,7 @@ const emailresponses = sq.define("emailresponses", {
   },
 
   Valid: {
-    type: DataTypes.BOOLEAN,
-    defaultValue: false,
+    type: DataTypes.STRING,
   },
 
   Reason: {

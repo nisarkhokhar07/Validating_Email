@@ -1,5 +1,8 @@
+//have the database's variable
 const { emailresponses } = require("../models/emailresponse");
 
+//function which push specific data to the specific column of db
+//data argument of function is an array of objects
 const pushdatatoDatabase = async (data) => {
   console.log("Entered Database Function");
 

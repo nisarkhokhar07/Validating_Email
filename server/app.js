@@ -1,6 +1,7 @@
 const express = require("express");
 const importRoute = require("../routes/importRoute");
 const testRoute = require("../routes/testRoute");
+const exportRoute = require("../routes/exportRoute");
 const app = express();
 const { Sequelize } = require("sequelize");
 const config = require("../config/config.json")["development"];
@@ -15,7 +16,6 @@ const sequelize = new Sequelize(
     dialect: config.dialect,
   }
 );
-// app.use(express.json());
 
 // Test database connection
 sequelize
@@ -27,8 +27,8 @@ sequelize
     console.error("Unable to connect to the database:", err);
   });
 
-// app.use("/importfile", importRoute);
-app.use("/", importRoute);
+app.use("/importfile", importRoute);
+app.use("/exportfile", exportRoute);
 app.use("/testapi", testRoute);
 
 app.listen(5000, () => {
