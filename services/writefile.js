@@ -1,5 +1,11 @@
 const fs = require("fs");
 
+/**
+ * It will write the csv data to the file destination provided as a dest param
+ * @param {*} data
+ * @param {*} dest
+ * @author Nisar Khokhar
+ */
 const writetofile = (data, dest) => {
   try {
     const writeablestream = fs.createWriteStream(dest);

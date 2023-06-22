@@ -1,10 +1,17 @@
 const validator = require("deep-email-validator");
 
+/**
+ * it will validate data for DB as it appends new properties in each object present in array which
+ * is sent to this as an argument
+ * @param {*} processedDataforDb
+ * @author Nisar Khokhar
+ * @returns
+ */
+
 const validatefordb = async (processedDataforDb) => {
   try {
     //made an array where our updated data will be stored
     //which will have objects in which we add more key value pairs
-
     let validatedDataforDb = [];
 
     while (processedDataforDb.length) {

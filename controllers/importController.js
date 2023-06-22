@@ -2,18 +2,23 @@ const fs = require("fs");
 const csvParser = require("csv-parser");
 const { Parser } = require("json2csv");
 
-//placed the functions in the services directory and imported them here
 const validateemails = require("../services/validateemails");
 const writetofile = require("../services/writefile");
 const validatefordb = require("../services/validateForDb");
 const pushdatatoDatabase = require("../services/pushdatatodb");
 
+/**
+ * This will update the file and push data to the database
+ * @author Nisar Khokhar
+ * @param {*} req
+ * @param {*} res
+ */
 const importUser = async (req, res) => {
   try {
     //req.file.path will contain the path where the file is stored in multer storage engine
     const filepath = req.file.path;
     const filestream = fs.createReadStream(filepath);
-    //initiate empty arrays where specific data is to be pushed
+
     const processedData = [];
     const processedDataforDb = [];
 

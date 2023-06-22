@@ -1,5 +1,11 @@
 const validator = require("deep-email-validator");
 
+/**
+ * Returns modified array of objects with extra property of Valid in it which tells whether the email is valid or not
+ * @author Nisar Khokhar
+ * @param {*} processedData
+ * @returns
+ */
 const validateemails = async (processedData) => {
   try {
     //made an array where our updated data will be stored

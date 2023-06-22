@@ -1,6 +1,12 @@
 const fs = require("fs");
 const path = require("path");
 
+/**
+ * This will get the file downloaded on device with the name file.csv
+ * @author Nisar Khokhar
+ * @param {*} req
+ * @param {*} res
+ */
 const exportUser = async (req, res) => {
   try {
     //resolve the path to file which has to be exported
