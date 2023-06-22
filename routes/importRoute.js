@@ -5,7 +5,7 @@ const importController = require("../controllers/importController");
 
 const router = express.Router();
 
-router.use(express.static(path.resolve("./public")));
+// router.use(express.static(path.resolve("./public")));
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
