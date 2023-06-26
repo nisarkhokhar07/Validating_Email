@@ -13,7 +13,9 @@ Moreover, the validated data will be pushed to the database.
 
 The file will be uploaded to the server by hitting an endpoint of _/importfile_. The fieldname in the form where file be uploaded must be _file_.
 
-To download the updated excel worksheet, another endpoint of _/exportfile_ must get hit.
+To download the updated excel worksheet, another endpoint of _/exportfile_ must get hit, with a query param _name_ with the value of filename you want to download.
+
+To run the program, you have to run the command _npm run start:server_.
 
 ## Getting Started
 
@@ -58,7 +60,7 @@ It will also push the validated data to the database.
 
 ### Description
 
-This endpoint allows you to download the updated _excel workbook_ with the name **file**.
+This endpoint allows you to download the updated _excel workbook_ with the name **file**. You also have to provide a query param _name_ with the value of filename you want to download.
 
 ### Method
 
