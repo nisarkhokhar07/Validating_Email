@@ -12,7 +12,9 @@ const storage = multer.diskStorage({
     cb(null, "./public/uploads");
   },
   filename: (req, file, cb) => {
-    cb(null, "fileprocessed.xlsx");
+    const extension = file.originalname.split(".").pop();
+    const filename = Date.now() + "." + extension;
+    cb(null, filename);
   },
 });
 

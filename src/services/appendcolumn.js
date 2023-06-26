@@ -7,12 +7,12 @@ const XLSX = require("xlsx");
  * @param {*} validatedData
  */
 
-const appendcolumn = (validatedData) => {
+const appendcolumn = (validatedData, filePath) => {
   console.log("appending column");
   const newworkbook = XLSX.utils.book_new();
   const newworksheet = XLSX.utils.json_to_sheet(validatedData);
   XLSX.utils.book_append_sheet(newworkbook, newworksheet, "updatedSheet");
-  const filePath = path.resolve("./public/uploads/fileprocessed.xlsx");
+  // const filepath = path.resolve(filePath);
   XLSX.writeFile(newworkbook, filePath);
 };
 

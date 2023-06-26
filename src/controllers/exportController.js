@@ -9,8 +9,8 @@ const path = require("path");
  */
 const exportUser = async (req, res) => {
   try {
-    const file = path.resolve("./public/uploads/fileprocessed.xlsx");
-    console.log(file);
+    const filename = req.query.name;
+    const file = path.resolve(`./public/uploads/${filename}`);
     if (fs.existsSync(file)) {
       res.setHeader(
         "Content-Type",
@@ -28,7 +28,7 @@ const exportUser = async (req, res) => {
       });
     } else {
       res.send(
-        `No file exists now here ${file} you have already downloaded it`
+        `No file with name ${req.query.name} exists now you have already downloaded it`
       );
     }
   } catch (error) {

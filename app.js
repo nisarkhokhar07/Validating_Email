@@ -5,7 +5,7 @@ const app = express();
 
 app.use("/", importRoute);
 app.use("/", exportRoute);
-app.use("/", (req, resp) => {
+app.use("/testapi", (req, resp) => {
   resp.send("HELLO TEST API WORKING");
 });
 
