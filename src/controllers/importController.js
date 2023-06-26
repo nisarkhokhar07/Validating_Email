@@ -17,10 +17,10 @@ const importUser = async (req, res) => {
   const firstSheetName = sheetNames[0];
   const worksheet = workbook.Sheets[firstSheetName];
 
-  // Get the range of the worksheet
+  // Getting the range of the worksheet
   const range = XLSX.utils.decode_range(worksheet["!ref"]);
 
-  // Get the cell values of the first row (headers)
+  // Getting the cell values of the first row (headers)
   const headers = [];
   for (let C = range.s.c; C <= range.e.c; ++C) {
     const address = XLSX.utils.encode_cell({ r: range.s.r, c: C });
@@ -43,7 +43,7 @@ const importUser = async (req, res) => {
 
     res.status(200).send("Done with file update and pushing data to database");
   } else {
-    res.status(400).send("File does not contain emails column");
+    res.status(400).send("File does not contain Email column");
   }
 };
 
