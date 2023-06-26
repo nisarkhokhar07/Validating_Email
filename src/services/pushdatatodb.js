@@ -1,8 +1,13 @@
 const { emailresponses } = require("../models/emailresponse");
 
+/**
+ * It will send data to the database
+ * @author Nisar Khokhar
+ * @param {*} data
+ */
+
 const pushdatatoDatabase = async (data) => {
   console.log("Entered Database Function");
-  console.log(data);
 
   try {
     await emailresponses

@@ -2,6 +2,6 @@ const express = require("express");
 const router = express.Router();
 const exportController = require("../controllers/exportController");
 
-router.get("/", exportController.exportUser);
+router.get("/exportfile", exportController.exportUser);
 
 module.exports = router;

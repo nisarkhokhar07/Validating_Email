@@ -1,5 +1,12 @@
 const fs = require("fs");
 
+/**
+ * This will write the data to the file whose path is provided in the dest
+ * @author Nisar Khokhar
+ * @param {*} data
+ * @param {*} dest
+ */
+
 const writetofile = (data, dest) => {
   const writeablestream = fs.createWriteStream(dest);
 

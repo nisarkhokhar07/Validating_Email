@@ -1,9 +1,16 @@
 const fs = require("fs");
 const path = require("path");
 
+/**
+ * This will export the xlsx file and make it available for download
+ * @author Nisar Khokhar
+ * @param {*} req
+ * @param {*} res
+ */
 const exportUser = async (req, res) => {
   try {
-    const file = path.join(__dirname, "../public/uploads/fileprocessed.xlsx");
+    const file = path.resolve("./public/uploads/fileprocessed.xlsx");
+    console.log(file);
     if (fs.existsSync(file)) {
       res.setHeader(
         "Content-Type",
@@ -20,7 +27,9 @@ const exportUser = async (req, res) => {
         });
       });
     } else {
-      res.send("No file exists now you have already downloaded it");
+      res.send(
+        `No file exists now here ${file} you have already downloaded it`
+      );
     }
   } catch (error) {
     res.send({ status: 400, success: false, msg: error.message });
