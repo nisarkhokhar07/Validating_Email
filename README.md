@@ -4,13 +4,13 @@
 
 Before it makes sense to start a project, please make sure you have the following installed on your machine:
 
-### Node
+- ### Node
 
-See [Node](https://nodejs.org/en/download) for information on how to set it up.
+  See [Node](https://nodejs.org/en/download) for information on how to set it up.
 
-### Postgres
+- ### Postgres
 
-See [Postgres](https://www.postgresql.org/download/) for information on how to set it up.
+  See [Postgres](https://www.postgresql.org/download/) for information on how to set it up.
 
 ## Description
 
