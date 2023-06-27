@@ -12,9 +12,8 @@ const exportUser = async (req, res) => {
     const filename = req.query.name;
     const file = path.resolve(`./public/uploads/${filename}`);
     const extension = filename.split(".").pop();
-    console.log(extension);
 
-    if (extension == "xlsx") {
+    if (extension === "xlsx") {
       if (fs.existsSync(file)) {
         res.setHeader(
           "Content-Type",
@@ -38,7 +37,7 @@ const exportUser = async (req, res) => {
           `No file with name ${req.query.name} exists now you have already downloaded it`
         );
       }
-    } else if (extension == "csv") {
+    } else if (extension === "csv") {
       if (fs.existsSync(file)) {
         //headers are set to get the file downloaded in the specific format
         res.setHeader("Content-Type", "text/csv");
