@@ -86,10 +86,10 @@ const importUser = async (req, res) => {
         writetofile(CsvData, filePath);
 
         //validate data for database as it contains more columns than the data validated for file
-        // const validatedDataforDb = await validatefordb(processedDataforDb);
+        const validatedDataforDb = await validatefordb(processedDataforDb);
 
         //push data to the database
-        // pushdatatoDatabase(validatedDataforDb);
+        pushdatatoDatabase(validatedDataforDb);
 
         res.send({ status: 200, success: true, msg: "done" });
       })

@@ -3,7 +3,7 @@
 ## Pre-requisites
 
 - Install the [node](https://nodejs.org/en/download), more specifically version 18.16.0.
-- Install the Postgres version 15 for the database server to get live, which by default is on port 5432.
+- Install the [Postgres](https://www.postgresql.org/download/) version 15 for the database server to get live, which by default is on port 5432.
 
 ## Description
 
