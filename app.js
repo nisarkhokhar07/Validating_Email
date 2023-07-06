@@ -1,14 +1,14 @@
 const express = require("express");
-const importRoute = require("./src/routes/importRoute");
-const exportRoute = require("./src/routes/exportRoute");
+const handleRoutes = require("./src/handleRoutes");
+const dotenv = require("dotenv");
+const cors = require("cors");
+dotenv.config();
 const app = express();
 
-app.use("/", importRoute);
-app.use("/", exportRoute);
-app.use("/testapi", (req, resp) => {
-  resp.send("HELLO TEST API WORKING");
-});
+app.use(cors());
 
-app.listen(5000, () => {
-  console.log("server has started on port 5000");
+app.use("/", handleRoutes);
+
+app.listen(process.env.PORT || 5000, () => {
+  console.log(`server has started on port ${process.env.PORT || 5000}`);
 });

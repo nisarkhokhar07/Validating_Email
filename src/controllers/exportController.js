@@ -33,9 +33,11 @@ const exportUser = async (req, res) => {
           });
         });
       } else {
-        res.send(
-          `No file with name ${req.query.name} exists now you have already downloaded it`
-        );
+        res
+          .status(404)
+          .send(
+            `No file with name ${req.query.name} exists now you have already downloaded it`
+          );
       }
     } else if (extension === "csv") {
       if (fs.existsSync(file)) {
@@ -53,13 +55,15 @@ const exportUser = async (req, res) => {
           });
         });
       } else {
-        res.send("No file exists now you have already downloaded it");
+        res
+          .status(404)
+          .send("No file exists now you have already downloaded it");
       }
     } else {
-      res.status(400).send("No file exists of this format.");
+      res.status(404).send("No file exists of this format.");
     }
   } catch (error) {
-    res.send({ status: 400, success: false, msg: error.message });
+    res.send({ status: 404, success: false, msg: error.message });
   }
 };
 

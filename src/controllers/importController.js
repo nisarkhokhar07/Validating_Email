@@ -44,11 +44,11 @@ const importUser = async (req, res) => {
       pushdatatoDatabase(validatedDataforDb);
       //updating file with new valid column
       appendcolumn(validatedData, filePath);
-      res
-        .status(200)
-        .send("Done with file update and pushing data to database");
+      res.status(200).send({
+        message: "Done with file update and pushing data to database",
+      });
     } else {
-      res.status(400).send("File does not contain Email column");
+      res.status(400).send({ message: "File does not contain Email column" });
     }
   } else if (fileExtension === ".csv") {
     // const filepath = req.file.path;
@@ -64,7 +64,7 @@ const importUser = async (req, res) => {
         const emailcolumnexists = headers.includes("Email" || "email");
         //if it does not exist destroy the readstream functions and send the response back
         if (!emailcolumnexists) {
-          res.status(400).send("Email Column does not exist");
+          res.status(404).send({ message: "Email Column does not exist" });
           filestream.destroy();
           return;
         }
@@ -91,13 +91,24 @@ const importUser = async (req, res) => {
         //push data to the database
         pushdatatoDatabase(validatedDataforDb);
 
-        res.send({ status: 200, success: true, msg: "done" });
+        res.send({ status: 200, success: true, message: "done" });
       })
       .on("error", (error) => {
-        res.status(500).send("Error occured while processing the csv file");
+        res
+          .status(500)
+          .send({ message: "Error occured while processing the csv file" });
       });
   } else {
-    res.send("File format unsupported");
+    res.status(400).send({ message: "File format unsupported" });
+    fs.unlink(filePath, (err) => {
+      if (!err) {
+        console.log(
+          "file deleted successfully of unsupported format from server"
+        );
+      } else {
+        console.log(`Error deleting file ${err.message}`);
+      }
+    });
   }
 };
 

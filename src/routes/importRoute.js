@@ -14,12 +14,12 @@ const storage = multer.diskStorage({
   filename: (req, file, cb) => {
     // const extension = file.originalname.split(".").pop();
     // const filename = Date.now() + "." + extension;
+    // const extension = path.extname(file.originalname);
     cb(null, file.originalname);
   },
 });
-
 const upload = multer({ storage: storage });
 
-router.post("/importfile", upload.single("file"), importController.importUser);
+router.post("/", upload.single("file"), importController.importUser);
 
 module.exports = router;
