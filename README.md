@@ -14,15 +14,15 @@ Before it makes sense to start a project, please make sure you have the followin
 
 ## Description
 
-This program can help validating emails present in an excel file under the column header **Email**.
-It will append a new column of header _Valid_ which specifies either the corresponding email address is valid or not.
+This program can help validating emails present in an excel file under the column header `Email`.
+It will append a new column of header `Valid` which specifies either the corresponding email address is valid or not.
 Moreover, the validated data will be pushed to the database.
 
-The file will be uploaded to the server by hitting an endpoint of _/importfile_. The fieldname in the form where file be uploaded must be _file_.
+The file will be uploaded to the server by hitting an endpoint of `/importfile`. The _fieldname_ in the form where file be uploaded must be _file_.
 
-To download the updated excel worksheet, another endpoint of _/exportfile_ must get hit, with a query param _name_ with the value of filename you want to download.
+To download the updated excel worksheet, another endpoint of `/exportfile` must get hit, having a query param _name_ with the value of filename you want to download.
 
-To run the program, you have to run the command _npm run start:server_.
+To run the program, firstly install it in your local repository and run `npm install` command on your CLI. Make a folder namely _public_ in your root directory and another folder inside this folder namely _uploads_. After that, you have to run the command `npm run start:server` to initiate the program.
 
 ## Getting Started
 
@@ -42,9 +42,10 @@ PASSWORD =
 DATABASE =
 HOST =
 DIALECT =
+PORT =
 ```
 
-Provide the username and password of your database server, and all the required fields. Here, dialect in simple words is the type of the database.
+Provide the username and password of your database server and all the required fields. Here, dialect in simple words is the type of the database.
 
 ## Endpoint: /importfile
 
