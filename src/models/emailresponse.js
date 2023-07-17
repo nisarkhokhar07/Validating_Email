@@ -32,7 +32,7 @@ const emailresponses = sq.define("emailresponses", {
     type: DataTypes.BOOLEAN,
   },
 
-  Disposible: {
+  isDisposible: {
     type: DataTypes.BOOLEAN,
   },
 

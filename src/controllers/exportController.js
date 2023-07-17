@@ -21,7 +21,7 @@ const exportUser = async (req, res) => {
         );
         res.setHeader(
           "Content-Disposition",
-          'attachment; filename="file.xlsx"'
+          `attachment; filename="${filename}"`
         );
         res.sendFile(file, () => {
           fs.unlink(file, (err) => {
@@ -43,7 +43,9 @@ const exportUser = async (req, res) => {
       if (fs.existsSync(file)) {
         //headers are set to get the file downloaded in the specific format
         res.setHeader("Content-Type", "text/csv");
-        res.setHeader("Content-Disposition", 'attachment; filename="file.csv"');
+        res.setHeader(
+          `Content-Disposition", 'attachment; filename="${filename}"`
+        );
         //this will send the reponse as a file
         res.sendFile(file, () => {
           fs.unlink(file, (err) => {

@@ -19,12 +19,14 @@ const pushdatatoDatabase = async (data) => {
           Typo: value.T,
           Smtp: value.S,
           Regex: value.RE,
-          Disposible: value.D,
+          isDisposible: value.D,
           Mx: value.M,
         }))
       )
-      .then(() => console.log("created Database"));
-    console.log("Column data inserted into the database successfully");
+      .then(() => console.log("created Database"))
+      .catch((error) => {
+        console.log(error.message);
+      });
   } catch (error) {
     console.error(error.message);
   }

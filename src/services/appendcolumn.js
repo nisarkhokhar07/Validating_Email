@@ -12,7 +12,6 @@ const appendcolumn = (validatedData, filePath) => {
   const newworkbook = XLSX.utils.book_new();
   const newworksheet = XLSX.utils.json_to_sheet(validatedData);
   XLSX.utils.book_append_sheet(newworkbook, newworksheet, "updatedSheet");
-  // const filepath = path.resolve(filePath);
   XLSX.writeFile(newworkbook, filePath);
 };
 

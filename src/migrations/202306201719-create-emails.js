@@ -11,8 +11,6 @@ module.exports = {
       },
       Email: {
         type: Sequelize.STRING,
-        allowNull: true,
-        unique: true,
       },
       Valid: {
         type: Sequelize.BOOLEAN,
@@ -35,7 +33,7 @@ module.exports = {
         type: Sequelize.BOOLEAN,
       },
 
-      Disposible: {
+      isDisposible: {
         type: Sequelize.BOOLEAN,
       },
 
