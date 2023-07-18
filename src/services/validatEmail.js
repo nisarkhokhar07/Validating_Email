@@ -50,60 +50,15 @@ const validatefordb = async (JsonDataforDb) => {
           item.Email
         );
 
-        /*if (validators.typo.valid && validators.regex.valid) {
-          if (validators.disposable.valid) {
-            await runPythonScript(item)
-              .then((data) => {
-                item.T = validators.typo.valid;
-                item.D = false;
-                item.RE = validators.regex.valid;
-                if (data.includes("True")) {
-                  data = true;
-                } else {
-                  data = false;
-                }
-                item.R = data;
-                item.M = data;
-                item.S = data;
-                item.Valid = data;
-              })
-              .catch((err) => {
-                return err;
-              });
-            return item;
-          } else {
-            await runPythonScript(item)
-              .then((data) => {
-                item.T = validators.typo.valid;
-                item.D = true;
-                item.RE = validators.regex.valid;
-                if (data.includes("True")) {
-                  data = true;
-                  item.R = "Valid Email";
-                } else {
-                  data = false;
-                  item.R = "Invalid Email";
-                }
-                item.M = data;
-                item.S = data;
-                item.Valid = data;
-              })
-              .catch((err) => {
-                return err;
-              });
-            return item;
-          }
-        }*/
-
         if (
           validators.typo.valid &&
-          validators.regex.valid &&
-          validators.disposable.valid
+          validators.regex.valid
+          // validators.disposable.valid
         ) {
           await runPythonScript(item)
             .then((data) => {
               item.T = validators.typo.valid;
-              item.D = validators.disposable.valid;
+              // item.D = validators.disposable.valid;
               item.RE = validators.regex.valid;
               if (data.includes("True")) {
                 data = true;
@@ -121,7 +76,7 @@ const validatefordb = async (JsonDataforDb) => {
             });
           return item;
         } else {
-          item.D = validators.disposable.valid;
+          // item.D = validators.disposable.valid;
           item.T = validators.typo.valid;
           item.RE = validators.regex.valid;
           item.M = false;

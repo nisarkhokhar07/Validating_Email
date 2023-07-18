@@ -33,10 +33,6 @@ module.exports = {
         type: Sequelize.BOOLEAN,
       },
 
-      isDisposible: {
-        type: Sequelize.BOOLEAN,
-      },
-
       Mx: {
         type: Sequelize.BOOLEAN,
       },

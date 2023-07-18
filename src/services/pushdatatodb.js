@@ -19,7 +19,7 @@ const pushdatatoDatabase = async (data) => {
           Typo: value.T,
           Smtp: value.S,
           Regex: value.RE,
-          isDisposible: value.D,
+          // isDisposible: value.D,
           Mx: value.M,
         }))
       )
