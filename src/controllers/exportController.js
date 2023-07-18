@@ -44,7 +44,8 @@ const exportUser = async (req, res) => {
         //headers are set to get the file downloaded in the specific format
         res.setHeader("Content-Type", "text/csv");
         res.setHeader(
-          `Content-Disposition", 'attachment; filename="${filename}"`
+          "Content-Disposition",
+          `attachment; filename="${filename}"`
         );
         //this will send the reponse as a file
         res.sendFile(file, () => {
