@@ -27,7 +27,7 @@ The file will be uploaded to the server by hitting an endpoint of `/importfile`.
 
 To download the updated excel worksheet, another endpoint of `/exportfile` must get hit, having a query param _name_ with the value of filename you want to download.
 
-To run the program, firstly install it in your local repository and run `npm install` command on your CLI. Make a folder namely _public_ in your root directory and another folder inside this folder namely _uploads_. After that, you have to run the command `npm run start:server` to initiate the program.
+To run the program, firstly install it in your local repository and run `npm install` command on your CLI. After that, you have to run the command `npm run start:server` to initiate the program.
 
 ## Getting Started
 
