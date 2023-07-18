@@ -39,7 +39,7 @@ const validatefordb = async (JsonDataforDb) => {
       JsonDataforDb.length > 50000 ? 50000 : JsonDataforDb.length
     );
     const dataCheck = data.filter((item) => {
-      if (item.Email != null) {
+      if (item.Email !== "") {
         return item;
       }
     });
@@ -49,6 +49,51 @@ const validatefordb = async (JsonDataforDb) => {
         const { valid, reason, validators } = await validator.validate(
           item.Email
         );
+
+        /*if (validators.typo.valid && validators.regex.valid) {
+          if (validators.disposable.valid) {
+            await runPythonScript(item)
+              .then((data) => {
+                item.T = validators.typo.valid;
+                item.D = false;
+                item.RE = validators.regex.valid;
+                if (data.includes("True")) {
+                  data = true;
+                } else {
+                  data = false;
+                }
+                item.R = data;
+                item.M = data;
+                item.S = data;
+                item.Valid = data;
+              })
+              .catch((err) => {
+                return err;
+              });
+            return item;
+          } else {
+            await runPythonScript(item)
+              .then((data) => {
+                item.T = validators.typo.valid;
+                item.D = true;
+                item.RE = validators.regex.valid;
+                if (data.includes("True")) {
+                  data = true;
+                  item.R = "Valid Email";
+                } else {
+                  data = false;
+                  item.R = "Invalid Email";
+                }
+                item.M = data;
+                item.S = data;
+                item.Valid = data;
+              })
+              .catch((err) => {
+                return err;
+              });
+            return item;
+          }
+        }*/
 
         if (
           validators.typo.valid &&
