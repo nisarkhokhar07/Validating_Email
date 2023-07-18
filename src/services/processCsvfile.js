@@ -43,8 +43,11 @@ const processcsvfile = async (filePath) => {
 
         //validate data for file to be downloaded
         const validatedData = await validateData(processedData);
+
+        //file is going to have a Valid column appended so excluding other properties
+        // added after validation
         const dataforfile = validatedData.map((item) => {
-          const { T, D, RE, R, M, S, ...rest } = item;
+          const { T, RE, R, M, S, ...rest } = item;
           return rest;
         });
         //the csvparser reads and writes data in the csv format

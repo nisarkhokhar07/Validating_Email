@@ -8,11 +8,14 @@ const XLSX = require("xlsx");
  */
 
 const appendcolumn = (validatedData, filePath) => {
-  console.log("appending column");
-  const newworkbook = XLSX.utils.book_new();
-  const newworksheet = XLSX.utils.json_to_sheet(validatedData);
-  XLSX.utils.book_append_sheet(newworkbook, newworksheet, "updatedSheet");
-  XLSX.writeFile(newworkbook, filePath);
+  try {
+    const newworkbook = XLSX.utils.book_new();
+    const newworksheet = XLSX.utils.json_to_sheet(validatedData);
+    XLSX.utils.book_append_sheet(newworkbook, newworksheet, "updatedSheet");
+    XLSX.writeFile(newworkbook, filePath);
+  } catch (error) {
+    console.log("Error while updating XLSX file: " + error.message);
+  }
 };
 
 module.exports = appendcolumn;

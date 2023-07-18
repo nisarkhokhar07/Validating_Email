@@ -26,9 +26,9 @@ const exportUser = async (req, res) => {
         res.sendFile(file, () => {
           fs.unlink(file, (err) => {
             if (!err) {
-              console.log("file deleted successfully");
+              console.log("File deleted successfully from server.");
             } else {
-              console.log(`Error deleting file ${err.message}`);
+              console.log(`Error deleting file from server:  ${err.message}`);
             }
           });
         });
@@ -51,9 +51,9 @@ const exportUser = async (req, res) => {
         res.sendFile(file, () => {
           fs.unlink(file, (err) => {
             if (!err) {
-              console.log("file deleted successfully");
+              console.log("File deleted successfully from server.");
             } else {
-              console.log(`Error deleting file ${err.message}`);
+              console.log(`Error deleting file from server: ${err.message}`);
             }
           });
         });
@@ -66,7 +66,11 @@ const exportUser = async (req, res) => {
       res.status(404).send("No file exists of this format.");
     }
   } catch (error) {
-    res.send({ status: 404, success: false, msg: error.message });
+    res.send({
+      status: 404,
+      success: false,
+      message: "Error while downloading file: " + error.message,
+    });
   }
 };
 

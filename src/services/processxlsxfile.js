@@ -27,7 +27,7 @@ const processxlsxfile = async (filePath) => {
       const validatedData = await validatEmail(JsonData);
 
       const dataforfile = validatedData.map((item) => {
-        const { T, D, RE, R, M, S, ...rest } = item;
+        const { T, RE, R, M, S, ...rest } = item;
         return rest;
       });
       //sending data to database

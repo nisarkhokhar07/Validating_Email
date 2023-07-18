@@ -11,7 +11,7 @@ const { spawn } = require("child_process");
 const runPythonScript = async (item) => {
   const result1 = await new Promise((resolve, reject) => {
     const stringified_data = JSON.stringify(item.Email);
-    const python = spawn("python", ["pythonfile.py", stringified_data]);
+    const python = spawn("python3", ["pythonfile.py", stringified_data]);
     let result = "";
 
     python.stdout.on("data", function (data) {
