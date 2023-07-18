@@ -162,7 +162,6 @@ If your database server is live, your database model, as following, will be crea
 | Typo       | boolean |             |
 | Smtp       | boolean |             |
 | Regex      | boolean |             |
-| Disposible | boolean |             |
 | Mx         | boolean |             |
 | created_at | date    |             |
 | updated_at | date    |             |
