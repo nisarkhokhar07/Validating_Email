@@ -60,7 +60,7 @@ const exportUser = async (req, res) => {
       } else {
         res
           .status(404)
-          .send("No file exists now you have already downloaded it");
+          .send("No file exists now, you have already downloaded it");
       }
     } else {
       res.status(404).send("No file exists of this format.");
