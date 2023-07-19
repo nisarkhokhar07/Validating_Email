@@ -10,6 +10,7 @@ const sequelize = new Sequelize(
   {
     host: process.env.HOST,
     dialect: process.env.DIALECT,
+    schema: "testdb_schema",
   }
 );
 

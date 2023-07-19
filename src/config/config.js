@@ -9,6 +9,7 @@ module.exports = {
     password: process.env.PASSWORD,
     host: process.env.HOST,
     dialect: process.env.DIALECT,
+    schema: "testdb_schema",
   },
   production: {
     database: process.env.DATABASE,
@@ -16,5 +17,6 @@ module.exports = {
     password: process.env.PASSWORD,
     host: process.env.HOST,
     dialect: process.env.DIALECT,
+    schema: "testdb_schema",
   },
 };

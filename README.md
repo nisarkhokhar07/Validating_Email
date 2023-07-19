@@ -39,7 +39,7 @@ Install the [node](https://nodejs.org/en/download) environemnt in your device. T
 
 Install the Postgres version 15 for the proper functioning of the code. After your database gets live the execution of the code will run smoothly.
 
-Install the python version 11 in your device. After installing and setting up python, use _pip_ command to install the python package _py3-validate-email_.
+Install the python version 3.6 or above in your device. After installing and setting up python, use _pip_ command to install the python package _py3-validate-email_.
 
 ```bash
 pip install py3-validate-email==1.0.4
