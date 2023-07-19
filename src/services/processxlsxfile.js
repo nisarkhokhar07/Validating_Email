@@ -2,9 +2,8 @@ const XLSX = require("xlsx");
 const fs = require("fs");
 
 const pushdatatoDatabase = require("./pushdatatodb");
-const validatefordb = require("./validatefordb");
-const validatedata = require("./validateforfile");
 const appendcolumn = require("./appendcolumn");
+const validatEmail = require("./validatEmail");
 
 const processxlsxfile = async (filePath) => {
   const workbook = XLSX.readFile(filePath);
@@ -25,13 +24,16 @@ const processxlsxfile = async (filePath) => {
     if (headers.includes("Email" || "email")) {
       //validating data for file to append new column of Valid
       const JsonData = XLSX.utils.sheet_to_json(worksheet);
-      const validatedData = await validatedata(JsonData);
+      const validatedData = await validatEmail(JsonData);
+
+      const dataforfile = validatedData.map((item) => {
+        const { T, RE, R, M, S, ...rest } = item;
+        return rest;
+      });
       //sending data to database
-      const JsonDataforDb = XLSX.utils.sheet_to_json(worksheet);
-      const validatedDataforDb = await validatefordb(JsonDataforDb);
-      pushdatatoDatabase(validatedDataforDb);
+      await pushdatatoDatabase(validatedData);
       //updating file with new valid column
-      appendcolumn(validatedData, filePath);
+      appendcolumn(dataforfile, filePath);
 
       resolve({
         status: 200,

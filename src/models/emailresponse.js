@@ -32,10 +32,6 @@ const emailresponses = sq.define("emailresponses", {
     type: DataTypes.BOOLEAN,
   },
 
-  Disposible: {
-    type: DataTypes.BOOLEAN,
-  },
-
   Mx: {
     type: DataTypes.BOOLEAN,
   },

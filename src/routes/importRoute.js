@@ -5,20 +5,17 @@ const importController = require("../controllers/importController");
 
 const router = express.Router();
 
-// router.use(express.static(path.resolve("./public")));
-
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "./public/uploads");
+    cb(null, __dirname + "../../../public/uploads");
   },
   filename: (req, file, cb) => {
-    // const extension = file.originalname.split(".").pop();
-    // const filename = Date.now() + "." + extension;
-    // const extension = path.extname(file.originalname);
     cb(null, file.originalname);
   },
 });
 const upload = multer({ storage: storage });
+
+console.log(path.resolve(__dirname + "../../../public/uploads"));
 
 router.post("/", upload.single("file"), importController.importUser);
 

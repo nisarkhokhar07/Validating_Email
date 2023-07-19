@@ -3,14 +3,12 @@ const csvParser = require("csv-parser");
 const { Parser } = require("json2csv");
 
 const pushdatatoDatabase = require("./pushdatatodb");
-const validatefordb = require("./validatefordb");
-const validatedata = require("./validateforfile");
 const writetofile = require("./writefile");
+const validateData = require("./validatEmail");
 
 const processcsvfile = async (filePath) => {
   const filestream = fs.createReadStream(filePath);
   const processedData = [];
-  const processedDataforDb = [];
 
   const result1 = await new Promise(function (resolve, reject) {
     filestream
@@ -38,27 +36,29 @@ const processcsvfile = async (filePath) => {
       .on("data", async (row) => {
         //push the data to the array row wise which will make the array of objects
         processedData.push(row);
-        processedDataforDb.push({ Email: row.Email || row.email });
       })
       .on("end", async () => {
-        console.log(3);
         //we initialize csvparser here
         const CsvParse = new Parser();
 
         //validate data for file to be downloaded
-        const validatedData = await validatedata(processedData);
+        const validatedData = await validateData(processedData);
 
+        //file is going to have a Valid column appended so excluding other properties
+        // added after validation
+        const dataforfile = validatedData.map((item) => {
+          const { T, RE, R, M, S, ...rest } = item;
+          return rest;
+        });
         //the csvparser reads and writes data in the csv format
-        const CsvData = CsvParse.parse(validatedData);
+        const CsvData = CsvParse.parse(dataforfile);
+
+        //push data to the database
+        await pushdatatoDatabase(validatedData);
 
         //write to the original file present in multer storage engine
         writetofile(CsvData, filePath);
 
-        //validate data for database as it contains more columns than the data validated for file
-        const validatedDataforDb = await validatefordb(processedDataforDb);
-
-        //push data to the database
-        await pushdatatoDatabase(validatedDataforDb);
         resolve({
           status: 200,
           success: true,

@@ -15,7 +15,7 @@ const validateforfile = async (JsonData) => {
       0,
       JsonData.length > 50000 ? 50000 : JsonData.length
     );
-    console.log(data.length);
+    // console.log(data.length);
     const dataCheck = data.filter((item) => {
       if (item.Email != null) {
         return item;
