@@ -11,6 +11,7 @@ const processxlsxfile = require("../services/processxlsxfile");
  */
 const importUser = (req, res) => {
   const filePath = req.file.path;
+  console.log(filePath);
   const fileExtension = path.extname(filePath);
 
   if (fileExtension === ".xlsx") {
