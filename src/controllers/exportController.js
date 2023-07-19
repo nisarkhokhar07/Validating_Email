@@ -10,7 +10,9 @@ const path = require("path");
 const exportUser = async (req, res) => {
   try {
     const filename = req.query.name;
-    const file = path.resolve(`./public/uploads/${filename}`);
+    const file = path.resolve(
+      __dirname + `../../../public/uploads/${filename}`
+    );
     const extension = filename.split(".").pop();
 
     if (extension === "xlsx") {

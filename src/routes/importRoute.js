@@ -7,13 +7,15 @@ const router = express.Router();
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "./public/uploads");
+    cb(null, __dirname + "../../../public/uploads");
   },
   filename: (req, file, cb) => {
     cb(null, file.originalname);
   },
 });
 const upload = multer({ storage: storage });
+
+console.log(path.resolve(__dirname + "../../../public/uploads"));
 
 router.post("/", upload.single("file"), importController.importUser);
 
