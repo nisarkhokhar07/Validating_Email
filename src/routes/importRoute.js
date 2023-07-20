@@ -15,8 +15,6 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
-console.log(path.resolve(__dirname + "../../../public/uploads"));
-
 router.post("/", upload.single("file"), importController.importUser);
 
 module.exports = router;

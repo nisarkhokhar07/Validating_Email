@@ -10,7 +10,6 @@ const processxlsxfile = require("../services/processxlsxfile");
  * @param {*} res
  */
 const importUser = (req, res) => {
-  console.log(req.file, "this is request file --------");
   const filePath = req.file.path;
   console.log(filePath);
   const fileExtension = path.extname(filePath);
